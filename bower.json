@@ -1,0 +1,24 @@
+{
+  "name": "revolt.components.buttons",
+  "homepage": "https://github.com/revolt-framework/components.buttons",
+  "authors": [
+    {
+      "name": "Ruven Pelka",
+      "email": "ruven.pelka@gmail.com",
+      "homepage": "http://ruvenpelka.com"
+    }
+  ],
+  "description": "Revolt framework's buttons module.",
+  "main": "_components.buttons.scss",
+  "keywords": [
+    "revolt",
+    "oocss",
+    "css",
+    "buttons"
+  ],
+  "dependencies": {
+    "revolt.settings.defaults": "0.x.x",
+    "revolt.base.root": "0.x.x"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,329 @@
+//
+// REVOLT!
+// COMPONENTS.BUTTONS
+//
+
+
+
+// Predefine the variables below to alter and enable specific features.
+
+$revo-button-namespace:                     $revo-components-namespace !default;
+
+$revo-button-line-height:                   1 !default;
+$revo-button-font-weight:                   normal !default;
+$revo-button-font-family:                   $revo-font-family !default;
+$revo-button-transition:                    all .2s ease-in-out !default;
+
+$revo-button-padding-y:                     .5rem !default;
+$revo-button-padding-x:                     1rem !default;
+$revo-button-font-size:                     $revo-base-font-size !default;
+$revo-button-border-width:                  2px !default;
+$revo-button-border-radius:                 .25rem !default;
+
+$revo-button-padding-y--small:              .3rem !default;
+$revo-button-padding-x--small:              .6rem !default;
+$revo-button-font-size--small:              .8rem !default;
+$revo-button-border-width--small:           1px !default;
+$revo-button-border-radius--small:          .25rem !default;
+
+$revo-button-padding-y--large:              .7rem !default;
+$revo-button-padding-x--large:              1.2rem !default;
+$revo-button-font-size--large:              1.3rem !default;
+$revo-button-border-width--large:           3px !default;
+$revo-button-border-radius--large:          .35rem !default;
+
+$revo-button-primary-color:                 white !default;
+$revo-button-primary-bg:                    black !default;
+$revo-button-primary-border:                black !default;
+
+$revo-button-secondary-color:               grey !default;
+$revo-button-secondary-bg:                  white !default;
+$revo-button-secondary-border:              grey !default;
+
+$revo-button-block-spacing-y:               .5rem !default;
+
+$revo-button-disabled-cursor:               not-allowed !default;
+
+$revo-button-link-color:                    lighten($revo-base-color, 45%) !default;
+$revo-button-link-disabled-color:           lighten($revo-base-color, 45%) !default;
+$revo-button-link-hover-color:              darken($revo-base-color, 15%) !default;
+$revo-button-link-hover-text-decoration:    none !default;
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Mixins
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+//
+// Mixin: Button Size
+//
+
+@mixin revo-button-size($padding-y, $padding-x, $font-size, $border-width, $border-radius) {
+    padding: $padding-y $padding-x;
+    font-size: $font-size;
+    border-width: $border-width;
+    border-radius: $border-radius;
+}
+
+
+
+//
+// Mixin: Button Variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+//
+
+@mixin revo-button-variant($color, $background, $border) {
+    $active-background: darken($background, 10%);
+    $active-border: darken($border, 12%);
+
+    color: $color;
+    background-color: $background;
+    border-color: $border;
+    //@include box-shadow($button-box-shadow);
+
+    // Hover and focus styles are shared
+    &:hover {
+        color: $color;
+        background-color: $active-background;
+        border-color: $active-border;
+    }
+
+    // Disabled comes first so active can properly restyle
+    &:disabled,
+    &.is-disabled {
+        background-color: $background;
+        border-color: $border;
+    }
+
+    &:active,
+    &.is-active,
+    .show > &.dropdown-toggle {
+        color: $color;
+        background-color: $active-background;
+        background-image: none; // Remove the gradient for the pressed/active state
+        border-color: $active-border;
+        //@include box-shadow($button-active-box-shadow);
+    }
+}
+
+
+
+//
+// Mixin: Button Outline Variant
+//
+
+@mixin revo-button-outline-variant($color, $color-hover: #fff) {
+    color: $color;
+    background-image: none;
+    background-color: transparent;
+    border-color: $color;
+
+    &:hover {
+        color: $color-hover;
+        background-color: $color;
+        border-color: $color;
+    }
+
+    &:focus,
+    &.focus {
+        box-shadow: 0 0 0 2px rgba($color, .5);
+    }
+
+    &.disabled,
+    &:disabled {
+        color: $color;
+        background-color: transparent;
+    }
+
+    &:active,
+    &.active,
+    .show > &.dropdown-toggle {
+        color: $color-hover;
+        background-color: $color;
+        border-color: $color;
+    }
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Classes
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+//
+// Base styles
+//
+
+.#{$revo-button-namespace}button,
+%#{$revo-button-namespace}button {
+    display: inline-block;
+    font-family: $revo-button-font-family;
+    font-weight: $revo-button-font-weight;
+    line-height: $revo-button-line-height;
+    border-style: solid;
+    border-color: transparent;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    transition: $revo-button-transition;
+
+    @include revo-button-size($revo-button-padding-y, $revo-button-padding-x, $revo-button-font-size, $revo-button-border-width, $revo-button-border-radius);
+
+    // Share hover and focus styles
+    &:hover {
+        text-decoration: none;
+    }
+    &.is-focused,
+    &:focus {
+        outline: 0;
+        //box-shadow: $btn-focus-box-shadow;
+    }
+
+    // Disabled comes first so active can properly restyle
+    &.is-disabled,
+    &:disabled {
+        cursor: $revo-button-disabled-cursor;
+        opacity: .65;
+        //@include box-shadow(none);
+    }
+
+    &.is-active,
+    &:active {
+        background-image: none;
+        //@include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+    }
+}
+
+// Future-proof disabling of clicks on `<a>` elements
+a.#{$revo-button-namespace}button.is-disabled,
+fieldset[disabled] a.#{$revo-button-namespace}button {
+    pointer-events: none;
+}
+
+
+
+//
+// Alternate buttons
+//
+
+.#{$revo-button-namespace}button--primary,
+%#{$revo-button-namespace}button--primary {
+    @include revo-button-variant($revo-button-primary-color, $revo-button-primary-bg, $revo-button-primary-border);
+}
+
+.#{$revo-button-namespace}button--secondary,
+%#{$revo-button-namespace}button--secondary {
+    @include revo-button-variant($revo-button-secondary-color, $revo-button-secondary-bg, $revo-button-secondary-border);
+}
+
+// Remove all backgrounds
+
+.#{$revo-button-namespace}button--outline-primary,
+%#{$revo-button-namespace}button--outline-primary {
+    @include revo-button-outline-variant($revo-button-primary-bg);
+}
+
+.#{$revo-button-namespace}button--outline-secondary,
+%#{$revo-button-namespace}button--outline-secondary {
+    @include revo-button-outline-variant($revo-button-secondary-border);
+}
+
+
+
+//
+// Button Sizes
+//
+
+.#{$revo-button-namespace}button--large,
+%#{$revo-button-namespace}button--large {
+    // line-height: ensure even-numbered height of button next to large input
+    @include revo-button-size($revo-button-padding-y--large, $revo-button-padding-x--large, $revo-button-font-size--large, $revo-button-border-width--large, $revo-button-border-radius--large);
+}
+
+.#{$revo-button-namespace}button--small,
+%#{$revo-button-namespace}button--small {
+    // line-height: ensure proper height of button next to small input
+    @include revo-button-size($revo-button-padding-y--small, $revo-button-padding-x--small, $revo-button-font-size--small, $revo-button-border-width--small, $revo-button-border-radius--small);
+}
+
+
+
+//
+// Block button
+//
+
+.#{$revo-button-namespace}button--block,
+%#{$revo-button-namespace}button--block {
+    display: block;
+    width: 100%;
+}
+
+// Vertically space out multiple block buttons
+.#{$revo-button-namespace}button--block + .#{$revo-button-namespace}button--block {
+    margin-top: $revo-button-block-spacing-y;
+}
+
+// Specificity overrides
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+
+    &.#{$revo-button-namespace}button--block {
+        width: 100%;
+    }
+}
+
+
+
+//
+// Link buttons
+//
+
+// Make a button look and behave like a link
+.#{$revo-button-namespace}button--link,
+%#{$revo-button-namespace}button--link {
+    font-weight: normal;
+    color: $revo-button-link-color;
+    border-radius: 0;
+
+    &,
+    &.is-active,
+    &:active,
+    &.is-disabled,
+    &:disabled {
+        background-color: transparent;
+        //@include box-shadow(none);
+    }
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: transparent;
+    }
+
+    &:focus,
+    &:hover {
+        color: $revo-button-link-hover-color;
+        text-decoration: $revo-button-link-hover-text-decoration;
+        background-color: transparent;
+    }
+
+    &.is-disabled,
+    &:disabled {
+        color: $revo-button-link-disabled-color;
+
+        &:focus,
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
