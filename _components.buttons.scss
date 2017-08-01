@@ -12,6 +12,7 @@ $revo-button-namespace:                     $revo-components-namespace !default;
 $revo-button-line-height:                   1 !default;
 $revo-button-font-weight:                   normal !default;
 $revo-button-font-family:                   $revo-font-family !default;
+$revo-button-text-transform:                normal !default;
 $revo-button-transition:                    all .2s ease-in-out !default;
 
 $revo-button-padding-y:                     .5rem !default;
@@ -167,6 +168,7 @@ $revo-button-link-hover-text-decoration:    none !default;
     font-family: $revo-button-font-family;
     font-weight: $revo-button-font-weight;
     line-height: $revo-button-line-height;
+    text-transform: $revo-button-text-transform;
     text-decoration: none;
     border-style: solid;
     border-color: transparent;
